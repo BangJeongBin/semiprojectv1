@@ -7,7 +7,7 @@
     <th:block layout:fragment="content">
         <main id="content">
             <h2>회원가입</h2>
-            <form name="joinfrm" id="joinfrm" method="post" onsubmit="return joinform()">
+            <form name="joinfrm" id="joinfrm" method="post">
 
                 <div>
                     <label for="userid">아아디</label>
@@ -49,8 +49,10 @@
 
     <th:block layout:fragment="script">
         <script>
-            function joinform() {
-                let joinfrm = document.forms['joinfrm'];
+            const joinfrm = document.querySelector('#joinfrm')    // id로 target 함
+
+            joinfrm.addEventListener("submit", (e) => {
+                e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
 
                 if (joinfrm.userid.value == '') {
                     alert('아이디를 입력하세요')
@@ -59,7 +61,7 @@
                     alert('비밀번호를 입력하세요')
                     return false;
                 }else if (joinfrm.repasswd.value == '') {
-                    alert('비밀번호를 확인을 입력하세요')
+                    alert('비밀번호가 일치하지 않습니다')
                     return false;
                 }else if (joinfrm.name.value == '') {
                     alert('이름를 입력하세요')
@@ -68,8 +70,8 @@
                     alert('이메일을 입력하세요')
                     return false;
                 }
-                return true;    // 회원정보를 정상적으로 작성했다면
-            }
+                joinfrm.submit();   // 회원정보를 정상적으로 작성했다면
+            });
         </script>
     </th:block>
 
