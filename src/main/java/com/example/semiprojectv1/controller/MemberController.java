@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Slf4j  // lombok - log객체 자동 생성
+@Slf4j  // lombok - logging객체 자동 생성
 @Controller
 @RequestMapping("/member") /* 이렇게 안쓴다면 아래에서 적용하면 됨 */
 @RequiredArgsConstructor
