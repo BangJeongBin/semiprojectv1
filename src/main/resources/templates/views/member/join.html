@@ -94,7 +94,7 @@
             ];
 
             // 비어있는 input 태그가 있을 시 submit 버튼 block
-            const joinfrm = document.querySelector('#joinfrm')    // id로 target 함
+            const joinfrm = document.querySelector('#joinfrm');   // id로 target 함
 
             joinfrm.addEventListener("submit", (e) => {
                 e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
@@ -106,14 +106,22 @@
 
                 // 회원가입 폼 안에 모든 input 요소 수집
                 const inputs = joinfrm.querySelectorAll('input');
-                inputs.forEach((input, idx) => {
+                inputs.forEach((input, idx) => {    // input 요소를 하나씩 순회하며 검사
                     if (!input.checkValidity()) {    // html5 태그를 이용한 유효성 검사
-                        let error = document.getElementById(`${input.id}Error`);
-                        error.textContent = errorMessages[idx];
-                        error.style.display = `block`;
+                        let error = document.getElementById(`${input.id}Error`);    // 에러메세지 요소 선택
+                        error.textContent = errorMessages[idx]; // 에러메세지 지정
+                        error.style.display = `block`;  // 에러메세지 표시
                         isValid = false;
                     }
                 });
+
+                // 비밀번호 일치 여부 검사
+                if (inputs[1].value !== inputs[2].value) {
+                    let error = document.getElementById('repasswdError')
+                    error.textContent = errorMessages[2];
+                    error.style.display = `block`;
+                    isValid = false;
+                }
 
                 if (isValid) joinfrm.submit();   // 회원정보를 정상적으로 작성했다면
             });
