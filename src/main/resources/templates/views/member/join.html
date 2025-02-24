@@ -71,54 +71,18 @@
     </th:block>
 
     <th:block layout:fragment="script">
+        <script src="/js/member.js"></script>
         <script>
-            // 상황별 에러메세지 출력(정규표현식 사용)
-            const errorMessages = [
-                '아이디는 소문자로 시작하고, 영문자와 숫자만 사용 가능합니다 (최소 6자 ~ 최대 18자)',
-                '비밀번호는 영문 대소문자, 숫자, 특수문자를 포함해야 합니다 (최소 6자 ~ 최대 18자)',
-                '비밀번호가 일치하지 않습니다',
-                '이름은 한글 또는 영문자만 사용 가능합니다',
-                '올바른 이메일 형식이 아닙니다',
-                '자동가입방지를 확인하세요'];
-            const patterns = [
-                /^[a-z][a-z0-9]{5,17}$/,
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/,
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/,
-                /^[가-힣]{2,5}|[a-zA-Z]{2,10}$/,
-                /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/
-            ];
-
             // 비어있는 input 태그가 있을 시 submit 버튼 block
             const joinfrm = document.querySelector('#joinfrm');   // id로 target 함
 
             joinfrm.addEventListener("submit", (e) => {
                 e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
 
-                let isValid = true;
+                clearErrorMessages();  // 에러메세지 초기화
 
-                document.querySelectorAll(".error-message")
-                    .forEach(error => error.textContent = '');
-
-                // 회원가입 폼 안에 모든 input 요소 수집
-                const inputs = joinfrm.querySelectorAll('input');
-                inputs.forEach((input, idx) => {    // input 요소를 하나씩 순회하며 검사
-                    if (!input.checkValidity()) {    // html5 태그를 이용한 유효성 검사
-                        let error = document.createElement('div');  // error-messaga가 들어갈 <div> 요소 생성
-                        error.className = 'error-message'   // 생성한 <div> 요소 class 지정 - css 적용을 위함
-                        error.textContent = errorMessages[idx]; // 에러메세지 지정
-                        input.parentElement.appendChild(error); // 지정한 위치에 자식요소로 추가
-                        isValid = false;
-                    }
-                });
-
-                // 비밀번호 일치 여부 검사
-                if (inputs[1].value !== inputs[2].value) {
-                    let error = document.createElement('div');  // error-messaga가 들어갈 <div> 요소 생성
-                    error.className = 'error-message'   // 생성한 <div> 요소 class 지정 - css 적용을 위함
-                    error.textContent = errorMessages[2]; // 에러메세지 지정
-                    inputs[2].parentElement.appendChild(error); // 지정한 위치에 자식요소로 추가
-                    isValid = false;
-                }
+                // 입력 요소 유효성 검사 - member.js 함수 호출
+                let isValid = validInputs(joinfrm);
 
                 if (isValid) joinfrm.submit();   // 회원정보를 정상적으로 작성했다면
             });
