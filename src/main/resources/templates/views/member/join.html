@@ -9,7 +9,7 @@
                 color: #dc3545;
                 font-size: 0.95em;
                 margin: 10px 0;
-                display: none;
+                /*display: none;*/
             }
 
             #joinfrm {
@@ -33,33 +33,28 @@
                     <input type="text" name="userid" id="userid" class="form-control" placeholder="아이디"
                            required minlength="6" maxlength="18">
                     <label for="userid" class="form-label">아이디</label>
-                    <div id="useridError" class="error-message"></div>
                 </div>
 
                 <div class="form-floating my-2">
                     <input type="password" name="passwd" id="passwd" class="form-control" placeholder="비밀번호"
                            required minlength="6" maxlength="18">
                     <label for="passwd" class="form-label">비밀번호</label>
-                    <div id="passwdError" class="error-message"></div>
                 </div>
 
                 <div class="form-floating my-2">
                     <input type="password" name="repasswd" id="repasswd" class="form-control" placeholder="비밀번호 확인"
                            required minlength="6" maxlength="18">
                     <label for="repasswd" class="form-label">비밀번호 확인</label>
-                    <div id="repasswdError" class="error-message"></div>
                 </div>
 
                 <div class="form-floating my-2">
                     <input type="text" name="name" id="name" class="form-control" placeholder="이름" required>
                     <label for="name" class="form-label">이름</label>
-                    <div id="nameError" class="error-message"></div>
                 </div>
 
                 <div class="form-floating my-2">
                     <input type="email" name="email" id="email" class="form-control" placeholder="이메일" required>
                     <label for="email" class="form-label">이메일</label>
-                    <div id="emailError" class="error-message"></div>
                 </div>
 
                 <div class="my-2 d-flex justify-content-center">
@@ -108,18 +103,20 @@
                 const inputs = joinfrm.querySelectorAll('input');
                 inputs.forEach((input, idx) => {    // input 요소를 하나씩 순회하며 검사
                     if (!input.checkValidity()) {    // html5 태그를 이용한 유효성 검사
-                        let error = document.getElementById(`${input.id}Error`);    // 에러메세지 요소 선택
+                        let error = document.createElement('div');  // error-messaga가 들어갈 <div> 요소 생성
+                        error.className = 'error-message'   // 생성한 <div> 요소 class 지정 - css 적용을 위함
                         error.textContent = errorMessages[idx]; // 에러메세지 지정
-                        error.style.display = `block`;  // 에러메세지 표시
+                        input.parentElement.appendChild(error); // 지정한 위치에 자식요소로 추가
                         isValid = false;
                     }
                 });
 
                 // 비밀번호 일치 여부 검사
                 if (inputs[1].value !== inputs[2].value) {
-                    let error = document.getElementById('repasswdError')
-                    error.textContent = errorMessages[2];
-                    error.style.display = `block`;
+                    let error = document.createElement('div');  // error-messaga가 들어갈 <div> 요소 생성
+                    error.className = 'error-message'   // 생성한 <div> 요소 class 지정 - css 적용을 위함
+                    error.textContent = errorMessages[2]; // 에러메세지 지정
+                    inputs[2].parentElement.appendChild(error); // 지정한 위치에 자식요소로 추가
                     isValid = false;
                 }
 
