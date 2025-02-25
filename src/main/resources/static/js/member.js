@@ -6,6 +6,12 @@ const errorMessages = [
     '이름은 한글 또는 영문자만 사용 가능합니다',
     '올바른 이메일 형식이 아닙니다',
     '자동가입방지를 확인하세요'];
+
+const loginMessages = [
+    '아이디를 올바르게 입력하세요',
+    '비밀번호를 올바르게 입력하세요',
+];
+
 const patterns = [
     /^[a-z][a-z0-9]{5,17}$/,
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,18}$/,
@@ -75,3 +81,85 @@ const hashPassword = async (passwd) => {
 
     return hashHex;
 }
+
+
+// submit vs fetch
+// <form> submit : 페이지 새로고침 발생, 에러처리는 브라우저에 의존
+// fetch 방식 : 비동기 처리 가능, 에러처리는 js로 세밀하게 조절 가능, 요청데이터를 JSON으로 전송 가능,
+//             REST API/SPA/비동기요청 에서 주로 사용
+
+// promise : 자바스크립트에서 비동기 작업을 처리하기 위한 객체
+//           주로 비동기 작업의 성공/실패를 관리하고 결과를 처리하는데 사용
+//           ES6에서 처음 도입 - 콜백 지옥을 해결, 비동기처리 코드를 깔끔하게 작성
+
+// async : 비동기 함수임을 선언 - 반환값은 promise
+// await : 비동기 함수의 처리가 완료될때 까지 기다렸다가 결과를 받아옴
+const submitJoinFrm = async (frm) => {
+    // Web Crypto API로 비밀번호 암호화
+    frm.passwd.value = await hashPassword(frm.passwd.value);
+    console.log(frm.passwd.value);
+
+
+    // 폼에 입력된 데이터를 formData객체로 초기화
+    const formData = new FormData(frm);
+
+    fetch('/member/join', {
+        method: 'post',
+        body: formData
+    }).then(async response => {
+        if (response.ok) {  // 회원가입이 정상적으로 처리되었다면
+            alert('회원가입이 완료되었습니다.')
+            location.href = '/member/login'
+        } else if (response.status === 400){
+            alert(await response.text());
+        } else {
+            alert('회원가입에 실패했습니다.')
+        }
+    }).catch(error => {
+        console.error('join error:', error)
+        alert('서버와 통신 실패!')
+    });
+} // submitJoinFrm
+
+
+// 로그인 폼 유효성 검사
+const validLogin = (form) => {
+    let isValid = true;
+
+    // 로그인 폼 안에 모든 input 요소 수집
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach((input, idx) => {    // input 요소를 하나씩 순회하며 검사
+        if (!input.checkValidity()) {    // html5 태그를 이용한 유효성 검사
+            displayErrorMessages(input, loginMessages[idx]);
+            isValid = false;
+        }
+    });
+
+    return isValid;
+}
+
+
+// 로그인 폼 제출
+const submitLoginFrm = async (frm) => {
+    // Web Crypto API로 비밀번호 암호화
+    frm.passwd.value = await hashPassword(frm.passwd.value);
+
+    const formData = new FormData(frm);
+
+    fetch('/member/login', {
+        method: 'post',
+        body: formData
+    }).then(async response => {
+        if (response.ok) {  // 로그인을 성공했다면
+            alert('로그인을 성공했습니다.')
+            location.href = '/member/myinfo'
+        } else if (response.status === 400){
+            alert(await response.text());
+        } else {
+            alert('로그인에 실패했습니다. 다시 시도해 주세요')
+        }
+    }).catch(error => {
+        console.error('join error:', error)
+        alert('서버와 통신 실패!')
+    });
+} // submitLoginFrm
