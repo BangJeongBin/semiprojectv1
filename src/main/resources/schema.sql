@@ -1,4 +1,4 @@
-create table members (
+create table if not exists members (
     mno int auto_increment primary key,
     userid varchar(18) unique not null,
     passwd varchar(64) not null,
