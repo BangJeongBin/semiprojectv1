@@ -97,4 +97,11 @@ public class MemberController {
 
         return returnUrl;
     }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();   // 세션 제거
+        return "redirect:/";
+    }
 }
