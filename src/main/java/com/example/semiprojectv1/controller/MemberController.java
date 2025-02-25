@@ -72,6 +72,7 @@ public class MemberController {
             session.setMaxInactiveInterval(600);    // 세션 유지 : 10분
 
             response =  ResponseEntity.ok().build();
+            System.out.println("==================" + response);
         } catch (IllegalStateException e) {
             // 비정상 처리 시 상태코드 400으로 응답 - 클라이언트 쟐못
             // 아이디나 비밀번호 잘못 입력 시
@@ -86,7 +87,14 @@ public class MemberController {
     }
 
     @GetMapping("/myinfo")
-    public String myinfo() {
-        return "views/member/myinfo";
+    public String myinfo(HttpSession session) {
+        String returnUrl = "views/member/login";
+
+        // 세션 변수가 생성되어 있다면(로그인이 되어 있다면) myinfo로 이동가능
+        if (session.getAttribute("loginUser") != null) {
+            returnUrl = "views/member/myinfo";
+        }
+
+        return returnUrl;
     }
 }

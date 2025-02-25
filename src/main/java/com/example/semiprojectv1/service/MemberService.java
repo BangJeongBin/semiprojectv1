@@ -35,9 +35,8 @@ public class MemberService {
         if (findMember == null || !findMember.getPasswd().equals(member.getPasswd())) {
             // 보안의 관점에서 세밀한 정보를 제공하지 않기 위한 조건
             throw new IllegalStateException("아이디나 비밀번호가 일치하지 않습니다.");
-        } else if (!findMember.getPasswd().equals(member.getPasswd())) {
-            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
         }
+
         return findMember;
     }
 }
