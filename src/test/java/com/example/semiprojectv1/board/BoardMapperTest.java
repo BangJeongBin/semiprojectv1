@@ -29,9 +29,10 @@ public class BoardMapperTest {
     @DisplayName("BoardMapper Select test")
     void insertTest() {
         // Given : 테스트에 사용할 데이터 제공
+        int stnum = 0;  // 조회 할 게시물 시작 위치
 
         // When : 데이터로 테스트할 기능 호출
-        List<BoardDTO> result = boardMapper.selectBoard();
+        List<BoardDTO> result = boardMapper.selectBoard(stnum);
 
         // Then : 호출되고 난 후 결과값 확인
         log.info("result : {}", result);

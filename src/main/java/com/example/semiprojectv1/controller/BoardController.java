@@ -18,10 +18,10 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String list(Model m) {
+    public String list(Model m, int cpg) {
         log.info("board/list 호출!!");
 
-        m.addAttribute("bds", boardService.readBoard());
+        m.addAttribute("bds", boardService.readBoard(cpg));
         return "views/board/list";
     }
 }

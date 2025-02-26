@@ -29,9 +29,11 @@ public class BoardControllerTest {
     @DisplayName("/list GET request test")
     public void list() throws Exception {
         // Given
+        String cpg = "1";  // 출력할 페이지 지정
 
         // When
-        mockMvc.perform(get("/board/list"))
+        mockMvc.perform(get("/board/list")
+                .param("cpg", cpg))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
