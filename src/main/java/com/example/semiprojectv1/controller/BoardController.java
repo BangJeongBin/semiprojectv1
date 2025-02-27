@@ -23,7 +23,9 @@ public class BoardController {
     public String list(Model m, @RequestParam(defaultValue = "1") int cpg) {
         log.info("board/list 호출!!");
 
-        m.addAttribute("bds", boardService.readBoard(cpg));
+        m.addAttribute("bds", boardService.readBoard(cpg))
+         .addAttribute("cpg", cpg);
+
         return "views/board/list";
     }
 }

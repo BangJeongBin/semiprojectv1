@@ -58,27 +58,18 @@
                         <td colspan="6">
                             <ul class="pagination">
                                 <li class="page-item">
-                                    <a href="#" class="page-link">이전</a>
+                                    <a th:href="|/board/list?cpg=${cpg - 1}|" class="page-link">이전</a>
                                 </li>
 
-                                <li class="page-item">
-                                    <a href="/board/list?cpg=1" class="page-link">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="/board/list?cpg=2" class="page-link">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="/board/list?cpg=3" class="page-link active">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="/board/list?cpg=4" class="page-link">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a href="/board/list?cpg=5" class="page-link">5</a>
-                                </li>
+                                <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+                                                    <!-- 배열 생성 -->
+                                    <li class="page-item">
+                                        <a th:href="|/board/list?cpg=${i}|" class="page-link" th:text="${i}"></a>
+                                    </li>
+                                </th:block>
 
                                 <li class="page-item">
-                                    <a href="#" class="page-link">다음</a>
+                                    <a th:href="|/board/list?cpg=${cpg + 1}|" class="page-link">다음</a>
                                 </li>
                             </ul>
                         </td>
