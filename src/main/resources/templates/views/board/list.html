@@ -57,13 +57,15 @@
                     <tr>
                         <td colspan="6">
                             <ul class="pagination">
-                                <li class="page-item">
+                                <!-- 현재 페이지가 1/10보다 '이전' 링크를 표시 -->
+                                <li class="page-item" th:if="${cpg gt 10}">
                                     <a th:href="|/board/list?cpg=${cpg - 1}|" class="page-link">이전</a>
                                 </li>
 
-                                <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+                                <th:block th:each="i : ${#numbers.sequence(stblk, stblk + 9)}">
                                                     <!-- 배열 생성 -->
-                                    <li class="page-item">
+                                    <!-- i와 cpg가 일치하지 않으면 일반적인 출력/ 일치하면 active 출력 -->
+                                    <li th:class="${(i ne cpg) ? 'page-item' : 'page-item active'}">
                                         <a th:href="|/board/list?cpg=${i}|" class="page-link" th:text="${i}"></a>
                                     </li>
                                 </th:block>
