@@ -25,7 +25,8 @@ public class BoardController {
 
         m.addAttribute("bds", boardService.readBoard(cpg))
          .addAttribute("cpg", cpg)
-         .addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1);
+         .addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1)
+         .addAttribute("cntpg", boardService.countBoard());
 
         return "views/board/list";
     }

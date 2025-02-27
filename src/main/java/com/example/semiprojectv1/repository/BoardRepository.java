@@ -9,6 +9,9 @@ import java.util.List;
 @Mapper
 public interface BoardRepository {
                                                                                 // limit "시작 인덱스", "증감 값"
-    @Select("select bno, title, userid, regdate, views, thumbs from boards order by bno desc limit #{stnum}, 25")
-    List<BoardDTO> selectBoard(int stnum);
+    @Select("select bno, title, userid, regdate, views, thumbs from boards order by bno desc limit #{stnum}, #{pageSize}")
+    List<BoardDTO> selectBoard(int stnum, int pageSize);
+
+    @Select("select ceil(count(bno) / #{pageSize}) cntpg from boards")
+    int countPagesBoard(int pageSize);
 }
