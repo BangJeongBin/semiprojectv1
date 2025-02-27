@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.TestConstructor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
@@ -39,5 +42,30 @@ public class BoardMapperTest {
         // Then : 호출되고 난 후 결과값 확인
         log.info("result : {}", result);
         assertNotNull(result);
+    }
+
+
+    @Test
+    @DisplayName("BoardMapper find test")
+    void findTest() {
+        // Given : 테스트에 사용할 데이터 제공
+        Map<String, Object> params = new HashMap<>(); // 컨테이너 변수
+        params.put("stnum", 0);
+        params.put("pageSize", 35);
+        params.put("findtype", "title");
+        params.put("findkey", "오픈");
+
+        // When : 데이터로 테스트할 기능 호출
+        /*List<BoardDTO> result = boardMapper.selectFindBoard(0, 35, "title", "오픈");*/
+        /*List<BoardDTO> result = boardMapper.selectFindBoard(0, 35, "userid", "abc");*/
+        /*List<BoardDTO> result = boardMapper.selectFindBoard(0, 35, "content", "오픈");*/
+        // HashMap형태로 검색 관련 데이터 넘기기
+        List<BoardDTO> result = boardMapper.selectFindBoard(params);
+
+        // Then : 호출되고 난 후 결과값 확인
+        log.info("result : {}", result);
+        assertNotNull(result);  // 널 여부 확인 - 리스트일 경우 의미없는 검사
+        assertThat(result).isNotEmpty();    // 비어있는지 여부 확인
+        assertThat(result.size()).isGreaterThan(1); // 결과 갯수 확인
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.semiprojectv1.repository.BoardRepository">
+
+    <!-- where 절의 컬럼명을 변수값에 따라 동적으로 변화시키려면 -->
+    <!-- #{findtype} 대신 ${findtype}로 사용할 것 -->
+    <select id="selectFindBoard" parameterType="map">
+        select bno, title, userid, regdate, thumbs, views
+        from boards
+        where ${findtype} like concat('%', #{findkey}, '%')
+        order by bno desc limit #{stnum}, #{pageSize}
+    </select>
+
+</mapper>
