@@ -22,6 +22,8 @@
         .cmtbg { background: yellow; padding: 5px; }
 
         .rpybg { background: lime; padding: 5px; }
+
+        .pre { white-space: pre-wrap }  /* 본문 글 줄바꿈 표시 */
     </style>
 </head>
 
@@ -30,7 +32,8 @@
         <main id="content">
             <h2>게시판 본문 글</h2>
 
-            <table class="table table-striped">
+            <div class="row offset-1 col-10 my-3">
+                <table class="table table-striped">
                 <thead>
                     <tr>
                         <td>
@@ -39,10 +42,11 @@
                             <button type="button" class="btn btn-light">다음게시물</button>
                         </td>
                         <td class="text-end">
-                            <button type="button" class="btn btn-primary">새글쓰기</button>
+                            <button type="button" class="btn btn-primary" id="newbdbtn">새글쓰기</button>
                         </td>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr>
                         <th class="vtit" colspan="2" th:text="${bd.title}">제목</th>
@@ -54,39 +58,46 @@
                     </tr>
 
                     <tr>
-                        <td class="vcont" colspan="2" th:text="${bd.contents}">본문글</td>
+                        <td class="vcont pre" colspan="2" th:text="${bd.contents}">본문글</td>
                     </tr>
                 </tbody>
+
                 <tfoot>
                     <tr>
                         <td>
                             <button type="button" class="btn btn-warning">수정하기</button>
                             &nbsp;
-                            <button type="button" class="btn btn-danger">삭제하기</button>
+                            <button type="button" class="btn btn-danger" id="rmvbdbtn">삭제하기</button>
                         </td>
                         <td class="text-end">
-                            <button type="button" class="btn btn-light">목록으로</button>
+                            <button type="button" class="btn btn-light" id="lstbdbtn">목록으로</button>
                         </td>
                     </tr>
-                </tfoot>
+                </tfoot >
             </table>
+            </div>
         </main>
     </th:block>
 
     <th:block layout:fragment="script">
         <script src="/js/board.js"></script>
         <script>
-            let findbtn = document.querySelector("#findbtn");
-            let findtype = document.querySelector("#findtype");
-            let findtkey = document.querySelector("#findkey");
+            let newbdbtn = document.querySelector("#newbdbtn");
+            let rmvbdbtn = document.querySelector("#rmvbdbtn");
+            let lstbdbtn = document.querySelector("#lstbdbtn");
 
-            findbtn.addEventListener('click', (e) => {
-                if (findtkey.value === '') {
-                    alert('검색어를 입력하세요');
-                } else {
-                    let params = `findtype=${findtype.value}&findkey=${findtkey.value}`;
-                    location.href = `/board/find?${params}`;
+            newbdbtn.addEventListener('click', (e) => {
+                location.href = `/board/write`;
+            });
+
+            rmvbdbtn.addEventListener('click', (e) => {
+                if (confirm('정말로 삭제 하시겠습니까?')) {
+                    location.href = `/board/remove?bno=`;
                 }
+            });
+
+            lstbdbtn.addEventListener('click', (e) => {
+                location.href = `/board/list`;
             });
         </script>
     </th:block>
