@@ -13,4 +13,11 @@
         order by bno desc limit #{stnum}, #{pageSize}
     </select>
 
+
+    <select id="countFindBoard" parameterType="map">
+        SELECT CEIL(COUNT(bno) / #{pageSize}) cntpg
+        FROM boards
+        WHERE ${findtype} LIKE CONCAT('%', #{findkey}, '%')
+    </select>
+
 </mapper>

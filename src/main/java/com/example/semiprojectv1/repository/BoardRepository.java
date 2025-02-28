@@ -18,4 +18,6 @@ public interface BoardRepository {
 
     /*List<BoardDTO> selectFindBoard(int stnum, int pageSize, String findtype, String findkey);*/
     List<BoardDTO> selectFindBoard(Map<String, Object> params);
+
+    int countFindBoard(Map<String, Object> params);
 }

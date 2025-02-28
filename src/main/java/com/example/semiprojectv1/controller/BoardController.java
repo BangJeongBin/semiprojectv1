@@ -34,7 +34,10 @@ public class BoardController {
     @GetMapping("/find")
     public String find(Model m, @RequestParam(defaultValue = "1") int cpg, String findtype, String findkey) {
 
-
+        m.addAttribute("bds", boardService.findBoard(cpg, findtype, findkey))
+         .addAttribute("cpg", cpg)
+         .addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1)
+         .addAttribute("cntpg", boardService.countFindBoard(findtype, findkey));
 
         return "views/board/list";
     }
