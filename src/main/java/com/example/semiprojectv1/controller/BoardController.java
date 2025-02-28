@@ -18,6 +18,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
     @GetMapping("/list")
         // RequestParam에 defaultValue를 이용하면 cpg매개변수가 전달되지 않을 경우 기본값인 1이 전달됨
     public String list(Model m, @RequestParam(defaultValue = "1") int cpg) {
@@ -31,6 +32,7 @@ public class BoardController {
         return "views/board/list";
     }
 
+
     @GetMapping("/find")
     public String find(Model m, @RequestParam(defaultValue = "1") int cpg, String findtype, String findkey) {
 
@@ -40,5 +42,13 @@ public class BoardController {
          .addAttribute("cntpg", boardService.countFindBoard(findtype, findkey));
 
         return "views/board/list";
+    }
+
+
+    @GetMapping("/view")
+    public String view(Model m, int bno) {
+        m.addAttribute("bd", boardService.readOneBoard(bno));
+
+        return "views/board/view";
     }
 }

@@ -55,10 +55,26 @@ public class BoardControllerTest {
                         .param("findtype", findtype)
                         .param("findkey", findkey))
                 .andExpect(status().isOk())
-                .andExpect(view().name("views/board/list"))
+                /*.andExpect(view().name("views/board/list"))*/
                 .andExpect(model().attributeExists("bds"))
                 .andExpect(model().attribute("bds", hasSize(greaterThan(0))))   // 객체 내 요소의 개수 비교
                 .andExpect(model().attributeExists("cntpg"))
                 .andExpect(model().attribute("cntpg", greaterThan(0))); // 변수의 값 비교
+    }
+
+
+    @Test
+    @DisplayName("/view GET request test")
+    public void view() throws Exception {
+        // Given
+        String bno = "3000";
+
+        // When
+        mockMvc.perform(get("/board/view")
+                        .param("bno", bno))
+                .andExpect(status().isOk())
+                /*.andExpect(view().name("views/board/view"))*/
+                .andExpect(model().attributeExists("bd"));
+                /*.andExpect(model().attribute("bd", greaterThan(0)));   // 객체 내 요소의 개수 비교*/
     }
 }

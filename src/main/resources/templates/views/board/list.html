@@ -50,7 +50,8 @@
                 <tbody>
                     <tr th:each="bd : ${bds}">
                         <td th:text="${bd.bno}"></td>
-                        <td th:text="${bd.title}"></td>
+                        <td>
+                            <a th:href="|/board/view?bno=${bd.bno}|" th:text="${bd.title}"></a></td>
                         <td th:text="${bd.userid}"></td>
                         <td th:text="${#strings.substring(bd.regdate, 0, 10)}"></td>
                         <td th:text="${bd.views}"></td>
