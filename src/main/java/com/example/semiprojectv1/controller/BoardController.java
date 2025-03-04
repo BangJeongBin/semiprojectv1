@@ -62,4 +62,11 @@ public class BoardController {
 
         return "views/board/view";
     }
+
+
+    @GetMapping("/write")
+    public String write() {
+
+        return "views/board/write";
+    }
 }

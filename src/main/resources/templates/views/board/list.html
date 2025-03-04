@@ -34,7 +34,7 @@
                             </div>
                         </td>
                         <td colspan="3" class="text-end">
-                            <button type="button" class="btn btn-primary"><i class="fas fa-pen"></i> 글쓰기</button>
+                            <button type="button" class="btn btn-primary" id="newbdbtn"><i class="fas fa-pen"></i> 글쓰기</button>
                         </td>
                     </tr>
                     <tr class="table-light">
@@ -96,6 +96,7 @@
             let findbtn = document.querySelector("#findbtn");
             let findtype = document.querySelector("#findtype");
             let findtkey = document.querySelector("#findkey");
+            let newbdbtn = document.querySelector("#newbdbtn");
 
             findbtn.addEventListener('click', (e) => {
                 if (findtkey.value === '') {
@@ -104,6 +105,10 @@
                     let params = `findtype=${findtype.value}&findkey=${findtkey.value}`;
                     location.href = `/board/find?${params}`;
                 }
+            });
+
+            newbdbtn.addEventListener('click', (e) => {
+                location.href = `/board/write`;
             });
         </script>
     </th:block>
