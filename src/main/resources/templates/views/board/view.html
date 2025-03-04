@@ -81,10 +81,12 @@
 
     <th:block layout:fragment="script">
         <script src="/js/board.js"></script>
-        <script>
+        <script th:inline="javascript">
             let newbdbtn = document.querySelector("#newbdbtn");
             let rmvbdbtn = document.querySelector("#rmvbdbtn");
             let lstbdbtn = document.querySelector("#lstbdbtn");
+            // 질의문자열에서 bno를 자바스크립트 코드에 삽입
+            const bno = [[${param.bno[0]}]];
 
             newbdbtn.addEventListener('click', (e) => {
                 location.href = `/board/write`;
@@ -92,7 +94,7 @@
 
             rmvbdbtn.addEventListener('click', (e) => {
                 if (confirm('정말로 삭제 하시겠습니까?')) {
-                    location.href = `/board/remove?bno=`;
+                    location.href = `/board/remove?bno=${bno}`;
                 }
             });
 
