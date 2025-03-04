@@ -2,6 +2,8 @@ package com.example.semiprojectv1.repository;
 
 import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
+import com.example.semiprojectv1.domain.NewBoardDTO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -28,4 +30,7 @@ public interface BoardRepository {
 
     @Update("update boards set views = views + 1 where bno = #{bno}")
     void updateViewOne(int bno);
+
+    @Insert("insert into boards(title, userid, contents) values (#{title}, #{userid}, #{contents})")
+    int insertBoard(NewBoardDTO newBoardDTO);
 }
