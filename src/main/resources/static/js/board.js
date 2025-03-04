@@ -38,7 +38,7 @@ const validBoard = (form) => {
         displayErrorMessages(recaptch, boardMessages[2]);
         isValid = false;
     }
-    alert(ggrecaptch);
+    console.log(ggrecaptch);
 
     return isValid;
 }
