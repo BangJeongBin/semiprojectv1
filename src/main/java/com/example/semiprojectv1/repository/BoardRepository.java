@@ -4,13 +4,14 @@ import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface BoardRepository {
-                                                                                // limit "시작 인덱스", "증감 값"
+    // limit "시작 인덱스", "증감 값"
     @Select("select bno, title, userid, regdate, views, thumbs from boards order by bno desc limit #{stnum}, #{pageSize}")
     List<BoardDTO> selectBoard(int stnum, int pageSize);
 
@@ -24,4 +25,7 @@ public interface BoardRepository {
 
     @Select("select * from boards where bno = #{bno}")
     Board selectOneBoard(int bno);
+
+    @Update("update boards set views = views + 1 where bno = #{bno}")
+    void updateViewOne(int bno);
 }
