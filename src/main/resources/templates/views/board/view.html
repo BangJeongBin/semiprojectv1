@@ -91,7 +91,8 @@
                         <td>
                             <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
                                 <span class="pushend">
-                                    <a href="#" data-ref="117" data-bs-toggle="modal"
+                                    <!-- data-ref : modal에 값을 넘겨주는 속성 -->
+                                    <a href="#" th:data-ref="${rp.rno}" data-bs-toggle="modal"
                                            data-bs-target="#cmtModal">[추가]</a> [수정] [삭제]</span></div>
                             <p class="py-1 pre" th:text="${rp.comments}"></p>
                         </td>
@@ -123,6 +124,28 @@
 
             </div>
         </main>
+
+        <!-- Modal -->
+        <div class="modal hide" id="cmtModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">대댓글 쓰기</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form name="cmmtfrm" id="cmmtfrm" method="post">
+                            <textarea name="comments" id="cmmt" rows="8" cols="60" class="span4"></textarea>
+                            <input type="hidden" name="userid" value="abc123">
+                            <input type="hidden" name="pno" th:value="${param.bno}">
+                            <input type="hidden" name="ref" id="refno">
+                        </form>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" id="cmmtbtn" class="btn btn-danger">대댓글 작성</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- 대댓글 쓰기 -->
     </th:block>
 
     <th:block layout:fragment="script">
@@ -132,6 +155,8 @@
             let rmvbdbtn = document.querySelector("#rmvbdbtn");
             let lstbdbtn = document.querySelector("#lstbdbtn");
             let replybtn = document.querySelector("#replybtn");
+            let cmmtbtn = document.querySelector("#cmmtbtn");
+            let cmtModal = document.querySelector("#cmtModal");
 
             // 질의문자열에서 bno를 자바스크립트 코드에 삽입
             const bno = [[${param.bno[0]}]];
@@ -161,6 +186,17 @@
                 }
                 replyfrm.action = '/board/reply';
                 replyfrm.submit();
+            });
+
+            cmmtbtn.addEventListener('click', (e) => {});
+
+            // 대댓글창이 띄워지면 댓글번호를 대댓글 작성폼에 초기화함
+            // data-xx : 사용자 정의 요소
+            cmtModal.addEventListener('show.bs.modal', (e) => {
+                // 이벤트가 발생한 요소의 특정 속성값을 가져옴
+                const refVal = e.relatedTarget.getAttribute('data-ref');
+                let refno = document.querySelector('#refno');
+                refno.value = refVal;
             });
         </script>
     </th:block>
