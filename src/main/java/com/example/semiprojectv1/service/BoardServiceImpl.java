@@ -78,4 +78,10 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.selectReply(pno);
     }
 
+    @Override
+    public boolean newComment(NewReplyDTO newReplyDTO) {
+        int result = boardMapper.insertComment(newReplyDTO);
+        return result > 0;
+    }
+
 }

@@ -87,15 +87,26 @@
 
                 <table class="table reply-border">
                     <tr th:each="rp : ${rps}">
-                        <td class="text-left" th:text="${rp.userid}"></td>
-                        <td>
-                            <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
-                                <span class="pushend">
-                                    <!-- data-ref : modal에 값을 넘겨주는 속성 -->
-                                    <a href="#" th:data-ref="${rp.rno}" data-bs-toggle="modal"
-                                           data-bs-target="#cmtModal">[추가]</a> [수정] [삭제]</span></div>
-                            <p class="py-1 pre" th:text="${rp.comments}"></p>
-                        </td>
+                        <th:block th:if="${rp.rno eq rp.ref}">
+                            <td class="text-left" th:text="${rp.userid}"></td>
+                            <td>
+                                <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
+                                    <span class="pushend">
+                                        <!-- data-ref : modal에 값을 넘겨주는 속성 -->
+                                        <a href="#" th:data-ref="${rp.rno}" data-bs-toggle="modal"
+                                               data-bs-target="#cmtModal">[추가]</a> [수정] [삭제]</span></div>
+                                <p class="py-1 pre" th:text="${rp.comments}"></p>
+                            </td>
+                        </th:block>
+
+                        <th:block th:if="${rp.rno ne rp.ref}">
+                            <td class="text-left">&nbsp;</td>
+                            <td>
+                                <div class="rpybg"><span th:text="${rp.userid}">작성자</span>
+                                    <span class="pushend" th:text="${rp.regdate}">작성일</span></div>
+                                <p class="py-1 pre" th:text="${rp.comments}"></p>
+                            </td>
+                        </th:block>
                     </tr>
                 </table><!-- 댓글/대댓글 목록 -->
 
@@ -166,7 +177,6 @@
             });
 
             rmvbdbtn.addEventListener('click', (e) => {
-
                 if (confirm('정말로 삭제 하시겠습니까?')) {
                     location.href = `/board/remove?bno=${bno}`;
                 }
@@ -188,7 +198,17 @@
                 replyfrm.submit();
             });
 
-            cmmtbtn.addEventListener('click', (e) => {});
+            cmmtbtn.addEventListener('click', (e) => {
+                const cmmt = document.querySelector('#cmmt')
+                const cmmtfrm = document.querySelector('#cmmtfrm')
+                if (cmmt.value === '') {
+                    // 글 작성 칸이 공란인 경우
+                    alert('대댓글을 작성하세요')
+                    return;
+                }
+                cmmtfrm.action = '/board/cmmt';
+                cmmtfrm.submit();
+            });
 
             // 대댓글창이 띄워지면 댓글번호를 대댓글 작성폼에 초기화함
             // data-xx : 사용자 정의 요소
