@@ -1,6 +1,7 @@
 package com.example.semiprojectv1.controller;
 
 import com.example.semiprojectv1.domain.NewBoardDTO;
+import com.example.semiprojectv1.domain.NewReplyDTO;
 import com.example.semiprojectv1.service.BoardService;
 
 import com.example.semiprojectv1.service.GoogleRecaptchaService;
@@ -98,7 +99,16 @@ public class BoardController {
         } catch (IllegalStateException ex) {
             response = ResponseEntity.badRequest().body(ex.getMessage());
         }
-
         return response;
+    }
+
+    @PostMapping("/reply")
+    public String replyok(NewReplyDTO newReplyDTO) {
+        String returnPage = "redirect:/board/view?bno=" + newReplyDTO.getPno();
+
+        if (boardService.newReply(newReplyDTO)) {
+            returnPage = "redirect:/board/error?type=1";
+        }
+        return returnPage;
     }
 }

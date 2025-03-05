@@ -75,6 +75,36 @@
                     </tr>
                 </tfoot >
             </table>
+
+                <div class="my-3">
+                    <h3><i class="fa fa-commenting">나도 한마디!!</i></h3>
+                </div>
+
+
+
+                <div class="py-3">
+                    <form class="card card-body bg-light" method="post"
+                          name="replyfrm" id="replyfrm">
+                        <div class="row align-items-center">
+                            <div class="col text-center">
+                                <label>abc123</label>
+                            </div>
+
+                            <div class="col-8">
+                                <textarea id="comments" rows="10" name="comments" class="form-control col-7"></textarea>
+                            </div>
+
+                            <div class="col">
+                                <button type="button" id="replybtn" class="btn btn-dark">
+                                    <i class="fa fa-commenting"></i> 댓글쓰기
+                                </button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="userid" value="abc123" />
+                        <input type="hidden" name="pno" th:value="${bd.bno}" />
+                    </form>
+                </div><!-- 댓글쓰기 -->
+
             </div>
         </main>
     </th:block>
@@ -85,12 +115,15 @@
             let newbdbtn = document.querySelector("#newbdbtn");
             let rmvbdbtn = document.querySelector("#rmvbdbtn");
             let lstbdbtn = document.querySelector("#lstbdbtn");
+            let replybtn = document.querySelector("#replybtn");
+
             // 질의문자열에서 bno를 자바스크립트 코드에 삽입
             const bno = [[${param.bno[0]}]];
 
             newbdbtn.addEventListener('click', (e) => {
                 location.href = `/board/write`;
             });
+
             rmvbdbtn.addEventListener('click', (e) => {
 
                 if (confirm('정말로 삭제 하시겠습니까?')) {
@@ -100,6 +133,18 @@
 
             lstbdbtn.addEventListener('click', (e) => {
                 location.href = `/board/list`;
+            });
+
+            replybtn.addEventListener('click', (e) => {
+                const comments = document.querySelector('#comments')
+                const replyfrm = document.querySelector('#replyfrm')
+                if (comments.value === '') {
+                     // 글 작성 칸이 공란인 경우
+                    alert('댓글을 작성하세요')
+                    return;
+                }
+                replyfrm.action = '/board/reply';
+                replyfrm.submit();
             });
         </script>
     </th:block>

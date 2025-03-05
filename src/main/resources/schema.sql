@@ -18,3 +18,15 @@ create table if not exists boards (
     primary key (bno),
     foreign key (userid) references members (userid)
 );
+
+create table if not exists replys (
+    rno int auto_increment,
+    userid varchar(18) not null,
+    comments text not null,
+    regdate datetime default current_timestamp,
+    ref int not null,
+    pno int not null,
+    primary key (rno)
+    -- foreign key (userid) references members (userid)
+    -- foreign key (pno) references boards (bno)
+);

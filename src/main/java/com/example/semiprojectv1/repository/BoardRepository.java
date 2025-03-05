@@ -3,6 +3,7 @@ package com.example.semiprojectv1.repository;
 import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
 import com.example.semiprojectv1.domain.NewBoardDTO;
+import com.example.semiprojectv1.domain.NewReplyDTO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -33,4 +34,7 @@ public interface BoardRepository {
 
     @Insert("insert into boards(title, userid, contents) values (#{title}, #{userid}, #{contents})")
     int insertBoard(NewBoardDTO newBoardDTO);
+
+    @Insert("insert into replys(userid, comments, ref, pno) values (#{userid}, #{comments}, last_insert_id() + 1, #{pno})")
+    int insertReply(NewReplyDTO newReplyDTO);
 }
