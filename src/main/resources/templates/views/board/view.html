@@ -91,7 +91,7 @@
                             <td class="text-left" th:text="${rp.userid}"></td>
                             <td>
                                 <div class="cmtbg"><span th:text="${rp.regdate}">2025-03-04 23:41:27</span>
-                                    <span class="pushend">
+                                    <span class="pushend" th:if="${session.loginUser ne null}">
                                         <!-- data-ref : modal에 값을 넘겨주는 속성 -->
                                         <a href="#" th:data-ref="${rp.rno}" data-bs-toggle="modal"
                                                data-bs-target="#cmtModal">[추가]</a> [수정] [삭제]</span></div>
@@ -110,12 +110,12 @@
                     </tr>
                 </table><!-- 댓글/대댓글 목록 -->
 
-                <div class="py-3">
-                    <form class="card card-body bg-light" method="post"
-                          name="replyfrm" id="replyfrm">
+                <!-- 로그인 여부에 따라 댓글쓰기 block -->
+                <div class="py-3" th:if="${session.loginUser ne null}">
+                    <form class="card card-body bg-light" method="post" name="replyfrm" id="replyfrm">
                         <div class="row align-items-center">
                             <div class="col text-center">
-                                <label>abc123</label>
+                                <label th:text="${session.loginUser.userid}"></label>
                             </div>
 
                             <div class="col-8">
