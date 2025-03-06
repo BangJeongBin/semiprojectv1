@@ -15,8 +15,11 @@ public interface BoardRepository {
     @Select("select bno, title, userid, regdate, views, thumbs from boards order by bno desc limit #{stnum}, #{pageSize}")
     List<BoardDTO> selectBoard(int stnum, int pageSize);
 
-    @Select("select ceil(count(bno) / #{pageSize}) cntpg from boards")
+    //@Select("select ceil(count(bno) / #{pageSize}) cntpg from boards")
     int countPagesBoard(int pageSize);
+
+    @Select("select count(bno) cntbd from boards")
+    int countBoard();
 
     /*List<BoardDTO> selectFindBoard(int stnum, int pageSize, String findtype, String findkey);*/
     List<BoardDTO> selectFindBoard(Map<String, Object> params);

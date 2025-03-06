@@ -41,10 +41,11 @@ public class BoardController {
 
         log.info("board/list 호출!!");
 
-        m.addAttribute("bds", boardService.readBoard(cpg))
+        m.addAttribute("bdsdto", boardService.readBoard(cpg));
+        /*m.addAttribute("bds", boardService.readBoard(cpg))
          .addAttribute("cpg", cpg)
          .addAttribute("stblk", ((cpg - 1) / 10) * 10 + 1)
-         .addAttribute("cntpg", boardService.countBoard());
+         .addAttribute("cntpg", boardService.countBoard());*/
 
         return "views/board/list";
     }

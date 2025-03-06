@@ -2,6 +2,7 @@ package com.example.semiprojectv1.board;
 
 import com.example.semiprojectv1.domain.Board;
 import com.example.semiprojectv1.domain.BoardDTO;
+import com.example.semiprojectv1.domain.BoardListDTO;
 import com.example.semiprojectv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +34,8 @@ public class BoardServiceTest {
         int cpg = 1;  // 현재 페이지의 1일 때 게시글들을 읽어옴
 
         // When
-        List<BoardDTO> results = boardService.readBoard(cpg);
+        /*List<BoardDTO> results = boardService.readBoard(cpg);*/
+        BoardListDTO results = boardService.readBoard(cpg);
 
         // Then
         assertNotNull(results);
