@@ -33,7 +33,7 @@
 
                 <div class="form-floating my-2">
                     <input type="text" name="userid" id="userid" class="form-control" placeholder="아이디"
-                           required readonly value="abc123">
+                           required readonly th:value="${session.loginUser.userid}">
                     <label for="userid" class="form-label">아이디</label>
                 </div>
 

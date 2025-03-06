@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -73,11 +74,16 @@ public class BoardController {
 
 
     @GetMapping("/write")
-    public String write(Model m) {
-        // 시스템 환경변수에 저장된 사이트키를 불러옴
-        m.addAttribute("sitekey", System.getenv("recaptcha.sitekey"));
+    public String write(Model m, HttpSession session) {
+        String returnPage = "redirect:/member/login";
 
-        return "views/board/write";
+        // 이 코드를 설정 시 url에서 write 입력시 로그인 창으로 강제 이동
+        if (session.getAttribute("loginUser") != null) {
+            // 시스템 환경변수에 저장된 사이트키를 불러옴
+            m.addAttribute("sitekey", System.getenv("recaptcha.sitekey"));
+            returnPage = "views/board/write";
+        }
+        return returnPage;
     }
 
 

@@ -34,7 +34,10 @@
                             </div>
                         </td>
                         <td colspan="3" class="text-end">
-                            <button type="button" class="btn btn-primary" id="newbdbtn"><i class="fas fa-pen"></i> 글쓰기</button>
+                            <!-- 로그인 여부에 따라 글쓰기 버튼 숨기기 -->
+                            <button type="button" class="btn btn-primary" id="newbdbtn" th:if="${session.loginUser ne null}">
+                                <i class="fas fa-pen"></i> 글쓰기
+                            </button>
                         </td>
                     </tr>
                     <tr class="table-light">
