@@ -13,7 +13,8 @@
     - Lombok
     - Validation
     - devtools
-    - 클라이언트: HTML, JavaScript (ES6), Fetch API   
+    - nginx : 로드밸런서, 프록시서버, CDN 서버
+    - 클라이언트: HTML, JavaScript (ES6), Fetch API
    
 
 3. **주요 내용**
