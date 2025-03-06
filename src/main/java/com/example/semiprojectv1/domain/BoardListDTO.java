@@ -14,6 +14,7 @@ public class BoardListDTO {
     private int edblk; // 페이지당 끝나는 게시물 번호
     private List<?> bdlist;
 
+    // 페이지네이션 수식 계산을 생성자에서 수행
     public BoardListDTO(int cpg, int totalItems, int pageSize, List<?> bdlist) {
         this.cpg = cpg;
         this.cntpg = (int)Math.ceil((double)totalItems / pageSize);    // 총 페이지수를 구하는 코드

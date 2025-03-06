@@ -24,14 +24,22 @@ public class BoardServiceImpl implements BoardService {
         int stnum = (cpg - 1) * pageSize;
         int totalItems = boardMapper.countBoard();
         List<BoardDTO> boards = boardMapper.selectBoard(stnum, pageSize);
+        // 트랜잭션 작업을 서비스impl에서 한번에 수행해서 controller로 넘김
 
         return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
-    /*@Override
-    public int countBoard() {
-        return boardMapper.countPagesBoard(pageSize);
-    }*/
+
+    @Transactional  // 트랜잭션
+    @Override
+    public BoardReplyDTO readOneBoardReply(int bno) {
+        boardMapper.updateViewOne(bno);
+        Board bd = boardMapper.selectOneBoard(bno);
+        List<Reply> rps = boardMapper.selectReply(bno);
+
+        return new BoardReplyDTO(bd, rps);
+    }
+
 
     @Override
     public List<BoardDTO> findBoard(int cpg, String findtype, String findkey) {
@@ -54,15 +62,15 @@ public class BoardServiceImpl implements BoardService {
         return boardMapper.countFindBoard(params);
     }
 
-    @Override
+    /*@Override
     public Board readOneBoard(int bno) {
         return boardMapper.selectOneBoard(bno);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void readOneView(int bno) {
         boardMapper.updateViewOne(bno);
-    }
+    }*/
 
     @Override
     public boolean newBoard(NewBoardDTO newBoardDTO) {
@@ -76,10 +84,10 @@ public class BoardServiceImpl implements BoardService {
         return result > 0;
     }
 
-    @Override
+    /*@Override
     public List<Reply> readReply(int pno) {
         return boardMapper.selectReply(pno);
-    }
+    }*/
 
     @Override
     public boolean newComment(NewReplyDTO newReplyDTO) {

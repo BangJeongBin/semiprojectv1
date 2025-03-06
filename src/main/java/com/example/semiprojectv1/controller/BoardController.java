@@ -66,9 +66,10 @@ public class BoardController {
     @GetMapping("/view")
     public String view(Model m, int bno) {
 
-        boardService.readOneView(bno);
+        m.addAttribute("bdrps", boardService.readOneBoardReply(bno));
+        /*boardService.readOneView(bno);
         m.addAttribute("bd", boardService.readOneBoard(bno));
-        m.addAttribute("rps", boardService.readReply(bno));
+        m.addAttribute("rps", boardService.readReply(bno));*/
 
         return "views/board/view";
     }

@@ -8,21 +8,21 @@ public interface BoardService {
 
     BoardListDTO readBoard(int cpg);
 
-    /*int countBoard();*/
+    BoardReplyDTO readOneBoardReply(int bno);
 
     List<BoardDTO> findBoard(int cpg, String findtype, String findkey);
 
     int countFindBoard(String findtype, String findkey);
 
-    Board readOneBoard(int bno);
+    /*Board readOneBoard(int bno);*/
 
-    void readOneView(int bno);
+    /*void readOneView(int bno);*/
 
     boolean newBoard(NewBoardDTO newBoardDTO);
 
     boolean newReply(NewReplyDTO newReplyDTO);
 
-    List<Reply> readReply(int pno);
+    /*List<Reply> readReply(int pno);*/
 
     boolean newComment(NewReplyDTO newReplyDTO);
 }
