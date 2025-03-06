@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper
 public interface GalleryRepository {
 
-    @Select("select gno, title, userid, thumbs, views, simgname, regdate from gallerys order by gno desc")
+    @Select("select gno, title, userid, regdate, thumbs, views, simgname from gallerys order by gno desc")
     List<Gallery> selectGallery();
 }
