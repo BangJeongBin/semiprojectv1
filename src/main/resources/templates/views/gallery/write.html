@@ -28,7 +28,8 @@
     <th:block layout:fragment="content">
         <main id="content">
             <h2>이미지 갤러리 글쓰기</h2>
-            <form name="galleryfrm" id="galleryfrm" method="post" novalidate>
+            <form name="galleryfrm" id="galleryfrm" method="post" novalidate
+                    enctype="multipart/form-data">
             <!-- novalidate사용 시 required minlength="6" maxlength="18" 같은 속성은 안먹음 -->
 
                 <div class="form-floating my-2">
@@ -48,8 +49,9 @@
                 </div>
 
                 <div class="form-floating my-2">
-                    <input type="file" name="ginames" id="ginames" class="form-control" placeholder="이미지첨부" multiple required>
-                    <label for="title" class="form-label">이미지 첨부</label>
+                    <input type="file" name="ginames" id="ginames" class="form-control" multiple required>
+                    <!--<label for="title" class="form-label">이미지 첨부</label>-->
+                    <input type="hidden" name="simgname" id="simgname">
                 </div>
 
                 <div class="my-2 d-flex justify-content-center">
@@ -83,6 +85,15 @@
 
                 // 입력 요소 유효성 검사 - board.js 함수 호출
                 let isValid = validGallery(galleryfrm);
+
+                // 첨부된 이미지들 중에서 첫번째 이미지파일의 이름 추출
+                // cowmeat01.jpg ==> cowmeat01_small.jpg
+                const ginames = document.querySelector('#ginames');
+                const simgname = document.querySelector('#simgname');
+                const fname = ginames.files[0].name.split('.');
+                const tfname = `${fname[0]}_small.${fname[1]}`;
+                //alert(fname + '/' + tfname);
+                simgname.value = tfname;    // 생성한 썸네일 파일명을 hidden 요소에 삽입
 
                 if (isValid) submitGalleryFrm(galleryfrm);   // 회원정보를 정상적으로 작성했다면
             });
