@@ -37,9 +37,10 @@
 
                 <div class="col-10 card" style="width: 18rem"
                      th:each="g : ${gals}">
-                    <a>
-                        <img src="http://localhost/cdn/small/cowmeat01_small.jpg"
-                             class="card-img-top" alt="..."></a>
+                    <a th:href="|/gallery/view/${g.gno}|">
+                        <img th:src="|http://localhost/cdn/small/${g.simgname}|"
+                             class="card-img-top" alt="...">
+                    </a>
 
                     <div class="card-body">
                         <h5 class="card-title" th:text="${g.title}">갤러리 제목</h5>
