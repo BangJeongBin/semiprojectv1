@@ -43,4 +43,12 @@ public class GalleryController {
 
         return "views/gallery/view";
     }
+
+
+    @GetMapping("/write")
+    public String write(Model m) {
+        m.addAttribute("sitekey", System.getenv("recaptcha.sitekey"));
+
+        return "views/gallery/write";
+    }
 }
