@@ -1,5 +1,6 @@
 package com.example.semiprojectv1.service;
 
+import com.example.semiprojectv1.domain.NewGalleryDTO;
 import com.example.semiprojectv1.domain.NewGalleryImageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.imgscalr.Scalr;
@@ -24,8 +25,11 @@ public class GalleryUploadService {
     @Value("${saveImgDir}") private String saveImgDir;
     @Value("${saveSimgDir}") private String saveSImgDir;
 
+
     public List<NewGalleryImageDTO> processUpload(List<MultipartFile> ginames, int gno) {
+        // 업로드 처리 된 파일정보를 저장하기 위해 리스트 변수 선언
         List<NewGalleryImageDTO> gis = new ArrayList<>();
+
         for (MultipartFile giname : ginames) {
             // 업로드할 파일 정보 알아내기 - 첨부파일명
             String fname = makeUUID() + giname.getOriginalFilename();
@@ -37,10 +41,17 @@ public class GalleryUploadService {
             String savepath = saveImgDir + fname;
 
             try {
+                // transferTo : 지정한 경로에 파일을 저장
+                // 임시폴더에 저장된 업로드 예정 파일을 지정한 위치에 저장
                 giname.transferTo(new File(savepath));
 
                 // 첨부파일 정보를 클래스객체로 만들어 리스트에 저장
                 gis.add(NewGalleryImageDTO.builder().imgsize(fsize).imgname(fname).gno(gno).build());
+
+                /*new NewGalleryImageDTO(); --> builder() 사용 안 할때 코드
+                ngi.setImgsize();
+                ngi.setImgname();
+                ngi.setGno();*/
 
             } catch (IOException e) {
                 log.error("첨부파일 처리중 오류발생!!");
@@ -62,10 +73,10 @@ public class GalleryUploadService {
     public void makeThumbnail(String tfname, String basename) {
         // 업로드된 첫번째 이미지 파일 경로 설정
         // 원본 : abc123.jpg
-        // 썸내일 : abc123_small.jpg
+        // 썸네일 : abc123_small.jpg
 
-        String refname = saveImgDir + basename;
-        String thumbname = saveSImgDir + tfname;
+        String refname = saveImgDir + basename;     // 원본 이미지 경로
+        String thumbname = saveSImgDir + tfname;    // 썸네일 이미지 경로
 
         // 썸내일 작업 진행
         try {
@@ -92,7 +103,7 @@ public class GalleryUploadService {
             ImageIO.write(resizeImg, "png", new File(thumbname));
 
         } catch (Exception ex) {
-            log.error("이미지 썸내일 작업중 오류발생!!!");
+            log.error("이미지 썸네일 작업중 오류발생!!!");
             ex.printStackTrace();
         }
     }

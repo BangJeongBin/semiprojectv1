@@ -42,7 +42,7 @@ const validGallery = (form) => {
     /*console.log(ggrecaptch);*/
 
     return isValid;
-}
+} // validGallery
 
 
 const submitGalleryFrm = async (frm) => {
@@ -64,5 +64,5 @@ const submitGalleryFrm = async (frm) => {
         console.error('gallery write error:', error)
         alert('서버와 통신 실패!')
     });
-}
+} // submitGalleryFrm
 
