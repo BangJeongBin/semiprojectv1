@@ -1,9 +1,6 @@
 package com.example.semiprojectv1.repository;
 
-import com.example.semiprojectv1.domain.GalleryImage;
-import com.example.semiprojectv1.domain.GalleryListDTO;
-import com.example.semiprojectv1.domain.GalleryViewDTO;
-import com.example.semiprojectv1.domain.NewGalleryDTO;
+import com.example.semiprojectv1.domain.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -27,4 +24,7 @@ public interface GalleryRepository {
     List<GalleryImage> selectGalleryImages(int gno);
 
     int insertGallery(NewGalleryDTO gal);
+
+    @Insert("insert into gallery_images (gno, imgname, imgsize) values (#{gno}, #{imgname}, #{imgsize}) ")
+    int insertGalleryImage(NewGalleryImageDTO gi);
 }
