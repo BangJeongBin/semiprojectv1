@@ -3,6 +3,8 @@ package com.example.semiprojectv1.repository;
 import com.example.semiprojectv1.domain.GalleryImage;
 import com.example.semiprojectv1.domain.GalleryListDTO;
 import com.example.semiprojectv1.domain.GalleryViewDTO;
+import com.example.semiprojectv1.domain.NewGalleryDTO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -23,4 +25,6 @@ public interface GalleryRepository {
 
     @Select("select imgname, imgsize from gallery_images where gno = #{gno}")
     List<GalleryImage> selectGalleryImages(int gno);
+
+    int insertGallery(NewGalleryDTO gal);
 }

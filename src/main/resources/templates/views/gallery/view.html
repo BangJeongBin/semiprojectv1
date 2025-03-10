@@ -99,9 +99,9 @@
     <th:block layout:fragment="script">
         <script src="/js/gallery.js"></script>
         <script th:inline="javascript">
-            let newbdbtn = document.querySelector("#newgalbtn");
-            let rmvbdbtn = document.querySelector("#rmvgalbtn");
-            let lstbdbtn = document.querySelector("#lstgalbtn");
+            let newgalbtn = document.querySelector("#newgalbtn");
+            let rmvgalbtn = document.querySelector("#rmvgalbtn");
+            let lstgalbtn = document.querySelector("#lstgalbtn");
 
             // 질의문자열에서 gno를 자바스크립트 코드에 삽입
             const bno = [[${gno}]];
