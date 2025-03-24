@@ -15,8 +15,7 @@
 
 
     <select id="countFindBoard" parameterType="map">
-        SELECT CEIL(COUNT(bno) / #{pageSize}) cntpg
-        FROM boards
+        SELECT count(bno) cnt FROM boards
         WHERE ${findtype} LIKE CONCAT('%', #{findkey}, '%')
     </select>
 
