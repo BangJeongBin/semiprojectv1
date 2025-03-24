@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout}">
 
     <head><!-- layout.html의 head - style 태그에 자동 추가 -->
@@ -33,7 +34,7 @@
 
                 <div class="form-floating my-2">
                     <input type="text" name="userid" id="userid" class="form-control" placeholder="아이디"
-                           required readonly th:value="${session.loginUser.userid}">
+                           required readonly th:value="${#authentication.principal.username}">
                     <label for="userid" class="form-label">아이디</label>
                 </div>
 
