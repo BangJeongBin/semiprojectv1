@@ -1,4 +1,4 @@
-package com.example.semiprojectv1.config;
+package com.example.semiprojectv1.custom;
 
 import com.example.semiprojectv1.domain.User;
 import com.example.semiprojectv1.repository.UserRepository;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CostomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 

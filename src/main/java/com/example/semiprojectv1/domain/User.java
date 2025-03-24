@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users")
+@Table(name="users4")
 @Data @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +32,9 @@ public class User {
     @Column(unique=true, nullable=false)
     private String email;
 
+    @Column(nullable=false)
+    private String role;
 
+    @CreationTimestamp
     private LocalDateTime regdate;
 }

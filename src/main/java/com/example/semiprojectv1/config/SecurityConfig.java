@@ -1,5 +1,7 @@
 package com.example.semiprojectv1.config;
 
+import com.example.semiprojectv1.custom.CustomAuthenticationFailureHandler;
+import com.example.semiprojectv1.custom.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
+    private final CustomAuthenticationSuccessHandler successHandler;
+    private final CustomAuthenticationFailureHandler failureHandler;
 
 
     // SecurityFilterChain : 스프링 시큐리티에서 적용된 보안규칙들을 필터로 구현해 둔 것
@@ -37,6 +41,8 @@ public class SecurityConfig {
                     .defaultSuccessUrl("/member/myinfo") // 로그인 성공 시 리다이렉트 URL
                     .failureUrl("/member/loginfail") // 로그인 실패 시 리다이렉트 URL
                     .permitAll()
+                    .successHandler(successHandler)
+                    .failureHandler(failureHandler)
                 .and()
                 .logout() // 로그아웃 설정
                     .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 URL 지정
