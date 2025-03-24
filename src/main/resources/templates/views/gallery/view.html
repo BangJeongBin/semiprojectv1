@@ -103,7 +103,7 @@
             let rmvgalbtn = document.querySelector("#rmvgalbtn");
             let lstgalbtn = document.querySelector("#lstgalbtn");
 
-            // 질의문자열에서 gno를 자바스크립트 코드에 삽입
+            // Path vailable에서 gno를 자바스크립트 코드에 삽입
             const bno = [[${gno}]];
 
             // 옵셔널 체이닝 : 해당 변수가 있으면 자바스크립트 코드 실행, 없을 시 삭제
@@ -113,7 +113,7 @@
 
             rmvgalbtn.addEventListener('click', (e) => {
                 if (confirm('정말로 삭제 하시겠습니까?')) {
-                    location.href = `/gallery/remove/$gno}`;
+                    location.href = `/gallery/remove/${gno}`;
                 }
             });
 
