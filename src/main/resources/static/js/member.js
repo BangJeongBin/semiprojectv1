@@ -140,13 +140,14 @@ const validLogin = (form) => {
 
 
 // 로그인 폼 제출
-const submitLoginFrm = async (frm) => {
+const submitLoginFrm = async (frm, token, headerName) => {
     // Web Crypto API로 비밀번호 암호화
     //frm.passwd.value = await hashPassword(frm.passwd.value);
     const formData = new FormData(frm);
 
     fetch('/member/login', {
-        method: 'post',
+        method: 'POST',
+        headers: {[headerName] : token},
         body: formData
     }).then(async response => {
         if (response.ok) { // 로그인을 성공했다면

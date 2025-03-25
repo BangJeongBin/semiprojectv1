@@ -4,6 +4,8 @@
       layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="css">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link href="/css/member.css" rel="stylesheet">
 </th:block>
 
@@ -38,6 +40,8 @@
         <script>
             // 비어있는 input 태그가 있을 시 submit 버튼 block
             const loginfrm = document.querySelector('#loginfrm');   // id로 target 함
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const headerName = document.querySelector('meta[name="_csrf_header"]').content;
 
             loginfrm.addEventListener("submit", (e) => {
                 e.preventDefault(); // submit 버튼 기능 중지, 이 코드 미 작성 시 alert는 뜨지만 페이지는 이동함
@@ -47,7 +51,7 @@
                 // 입력 요소 유효성 검사 - member.js 함수 호출
                 let isValid = validLogin(e.target);
 
-                if (isValid) submitLoginFrm(e.target);   // 회원정보를 정상적으로 작성했다면
+                if (isValid) submitLoginFrm(e.target, token, headerName);   // 회원정보를 정상적으로 작성했다면
             });
         </script>
     </th:block>
