@@ -78,13 +78,18 @@
         <!-- 동적 데이터 렌더링 -->
         <script>
             document.addEventListener('DOMContentLoaded', () => { // json 데이터를 모두 파싱한 경우
-                fetch('/api/v1/board/list', {
+                const url = new URL(window.location.href);
+                const findtype = url.searchParams.get('findtype');
+                const findkey = url.searchParams.get('findkey');
+                const cpg = (url.searchParams.get('cpg') === null) ? 1 : url.searchParams.get('cpg');
+
+                fetch(`/api/v1/board/list?cpg=${cpg}`, {
                     headers: {'Accept': 'application/json'}
                 }).then(response => response.json())
                 .then(data => {
                     //console.log(data);
-                    loadBoardList(data);
-                    loadBoardPgn(data);
+                    loadBoardList(data); // 리스트 출력 처리 함수 호출
+                    loadBoardPgn(data, findtype, findkey); // 페이지네이션 처리 함수 호출
                 }).catch(error => {
                     console.error('데이터 불러오는 중 오류 발생!!' , error)
                 });
@@ -116,12 +121,8 @@
 
 
             // 페이지네이션 처리 함수
-            const loadBoardPgn = (data) => {
+            const loadBoardPgn = (data, findtype, findkey) => {
                 const pgnBody = document.querySelector('.pagination');
-                const url = new URL(window.location.href);
-                const findtype = url.searchParams.get('findtype');
-                const findkey = url.searchParams.get('findkey');
-
                 const pglink = (findkey === null) ? '/board/list?cpg=' : `/board/find?findtype=${findtype}&findkey=${findkey}&cpg=`;
 
                 if (data.cpg > 1) {
