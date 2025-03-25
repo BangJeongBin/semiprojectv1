@@ -5,6 +5,7 @@ import com.example.semiprojectv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,14 @@ public class ApiBoardController {
     @GetMapping("/list")
     public ResponseEntity<BoardListDTO> list(@RequestParam(defaultValue = "1") int cpg) {
         BoardListDTO boardListDTO = boardService.readBoard(cpg);
+
+        return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/find")
+    public ResponseEntity<BoardListDTO> find(@RequestParam(defaultValue = "1") int cpg, String findtype, String findkey) {
+        BoardListDTO boardListDTO = boardService.findBoard(cpg, findtype, findkey);
 
         return new ResponseEntity<>(boardListDTO, HttpStatus.OK);
     }

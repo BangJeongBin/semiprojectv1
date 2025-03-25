@@ -77,13 +77,18 @@
 
         <!-- 동적 데이터 렌더링 -->
         <script>
+            // DOMContentLoaded : 정적 페이지를 모두 로드한 경우
             document.addEventListener('DOMContentLoaded', () => { // json 데이터를 모두 파싱한 경우
                 const url = new URL(window.location.href);
                 const findtype = url.searchParams.get('findtype');
                 const findkey = url.searchParams.get('findkey');
                 const cpg = (url.searchParams.get('cpg') === null) ? 1 : url.searchParams.get('cpg');
 
-                fetch(`/api/v1/board/list?cpg=${cpg}`, {
+                //`/api/v1/board/list?cpg=${cpg}`
+                const fetchurl = (findkey === null) ? `/api/v1/board/list?cpg=${cpg}` :
+                    `/api/v1/board/find?findtype=${findtype}&findkey=${findkey}&cpg=${cpg}`;
+
+                fetch(fetchurl, {
                     headers: {'Accept': 'application/json'}
                 }).then(response => response.json())
                 .then(data => {

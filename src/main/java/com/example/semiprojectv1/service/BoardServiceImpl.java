@@ -46,7 +46,6 @@ public class BoardServiceImpl implements BoardService {
         int stnum = (cpg - 1) * pageSize;
         Map<String, Object> params = new HashMap<>();
 
-        /*params.put("stnum", (cpg - 1) * pageSize);*/
         params.put("stnum", stnum);
         params.put("pageSize", pageSize);
         params.put("findtype", findtype);
@@ -58,10 +57,12 @@ public class BoardServiceImpl implements BoardService {
         return new BoardListDTO(cpg, totalItems, pageSize, boards);
     }
 
+
     @Override
     public int countfindBoard(Map<String, Object> params) {
         return boardMapper.countFindBoard(params);
     }
+
 
     /*@Override
     public Board readOneBoard(int bno) {
@@ -73,11 +74,13 @@ public class BoardServiceImpl implements BoardService {
         boardMapper.updateViewOne(bno);
     }*/
 
+
     @Override
     public boolean newBoard(NewBoardDTO newBoardDTO) {
         int result = boardMapper.insertBoard(newBoardDTO);
         return result > 0;
     }
+
 
     @Override
     public boolean newReply(NewReplyDTO newReplyDTO) {
@@ -85,10 +88,12 @@ public class BoardServiceImpl implements BoardService {
         return result > 0;
     }
 
+
     /*@Override
     public List<Reply> readReply(int pno) {
         return boardMapper.selectReply(pno);
     }*/
+
 
     @Override
     public boolean newComment(NewReplyDTO newReplyDTO) {
