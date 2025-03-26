@@ -98,8 +98,9 @@
                                 </button>
                             </div>
                         </div>
-                        <input type="hidden" name="userid" value="abc123" />
-<!--                        <input type="hidden" name="pno" th:value="${bdrps.bd.bno}" />-->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" name="userid"th:value="${#authentication.principal.username}" />
+                        <input type="hidden" name="pno" th:value="${param.bno}" />
                     </form>
                 </div><!-- 댓글쓰기 -->
 
@@ -116,7 +117,8 @@
                     <div class="modal-body">
                         <form name="cmmtfrm" id="cmmtfrm" method="post">
                             <textarea name="comments" id="cmmt" rows="8" cols="60" class="span4"></textarea>
-                            <input type="hidden" name="userid" value="abc123">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <input type="hidden" name="userid" th:value="${#authentication.principal.username}">
                             <input type="hidden" name="pno" th:value="${param.bno}">
                             <input type="hidden" name="ref" id="refno">
                         </form>
