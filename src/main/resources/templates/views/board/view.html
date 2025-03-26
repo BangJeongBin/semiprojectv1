@@ -135,7 +135,7 @@
         <!-- 동적 데이터 렌더링 -->
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                const bno = new URLSearchParams(window.location.search).get('bno')
+                const bno = new URLSearchParams(window.location.search).get('bno');
                 fetch(`/api/v1/board/view?bno=${bno}`, {
                     headers: {'Accept': 'application/json'}
                 }).then(response => response.json())
@@ -185,8 +185,8 @@
                 }
 
                 data.rps.forEach(rp => {
-                    if (rp.rno === rp.ref) {
-                        replys +=
+                    if (rp.rno === rp.ref) { // 출력유형이 댓글일 경우
+                        replys += 
                         `<tr>
                             <td class="text-left">${rp.userid}</td>
                             <td>
@@ -199,16 +199,17 @@
                         </tr>`;
                     }
 
-                        // <th:block th:if="${rp.rno !== rp.ref}">
-                        // <tr>
-                        //     <td className="text-left">&nbsp;</td>
-                        //     <td>
-                        //         <div className="rpybg"><span th:text="${rp.userid}">작성자</span>
-                        //             <span className="pushend" th:text="${rp.regdate}">작성일</span></div>
-                        //         <p className="py-1 pre" th:text="${rp.comments}"></p>
-                        //     </td>
-                        // </tr>
-                        // </th:block>
+                    if (rp.rno !== rp.ref) { // 출력유형이 대댓글일 경우
+                        replys +=
+                        `<tr>
+                            <td class="text-left">&nbsp;</td>
+                            <td>
+                                <div class="rpybg"><span>${rp.userid}</span>
+                                    <span class="pushend">${rp.regdate}</span></div>
+                                <p class="py-1 pre">${rp.comments}</p>
+                            </td>
+                        </tr>`;
+                    }
                 });
 
                 boardreply.innerHTML = replys;
@@ -224,7 +225,7 @@
             let cmtModal = document.querySelector("#cmtModal");
 
             // 질의문자열에서 bno를 자바스크립트 코드에 삽입
-            const bno = [[${param.bno[0]}]];
+            const bno = new URLSearchParams(window.location.search).get('bno');
 
             // 옵셔널 체이닝 : 해당 변수가 있으면 자바스크립트 코드 실행, 없을 시 삭제
             newbdbtn?.addEventListener('click', (e) => {
