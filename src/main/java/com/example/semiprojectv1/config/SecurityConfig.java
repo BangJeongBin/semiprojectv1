@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                //.csrf().disable() // CSRF 필터 끔(PostMan API 확인을 위해)
+                .csrf().disable() // CSRF 필터 끔(PostMan API 확인을 위해)
                     .userDetailsService(userDetailsService) // userDetailService 설정
                     .authorizeRequests() // URL 기반 인가 설정
                     .antMatchers("/member/logout", "/member/myinfo", "/board/write", "/gallery/write").authenticated() // 인증받은 사용자만 접근 가능
