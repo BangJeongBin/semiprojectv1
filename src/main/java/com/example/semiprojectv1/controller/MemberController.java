@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,7 +78,8 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<?> loginok(MemberDTO member, HttpServletResponse res) {
         // 로그인 처리 시 기타오류 발생에 대한 응답코드 설정
-        ResponseEntity<?> response = ResponseEntity.internalServerError().build();
+        ResponseEntity<?> response =
+                ResponseEntity.internalServerError().body("서버처리시 오류가 발생했습니다!!");
 
         log.info("submit된 회원정보 : {}", member);  // 넘어온 값을 확인하는 코드 - lombok 사용
 
@@ -88,7 +90,7 @@ public class MemberController {
             // 인증이 완료되면 JWT 토큰 생성
             final String jwt = jwtTokenProvider.generateToken(member.getUserid());
 
-            // JWT 토큰을 쿠키에 저장
+            // JWT 토큰을 쿠키에 저장 - 모놀리식 아키텍처에서는 쿠키를 사용
             Cookie cookie = new Cookie("jwt", jwt);
             cookie.setHttpOnly(true); // 토큰은 header를 통해서만 서버로 전송가능
             cookie.setMaxAge(60 * 30); // 유효시간 30분
@@ -97,14 +99,15 @@ public class MemberController {
 
             response =  ResponseEntity.ok().body("로그인 성공했습니다.");
             System.out.println("==================" + response);
-        } catch (IllegalStateException e) {
+        } catch (BadCredentialsException e) {
             // 비정상 처리 시 상태코드 400으로 응답 - 클라이언트 쟐못
             // 아이디나 비밀번호 잘못 입력 시
-            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패했습니다.");
-            e.printStackTrace();
+            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("아이디나 비밀번호를 확인하세요!!");
+            log.info(e.getMessage());
         } catch (Exception e) {
             // 비정상 처리 시 상태코드 500으로 응답 - 서버 쟐못
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
 
         return response;
