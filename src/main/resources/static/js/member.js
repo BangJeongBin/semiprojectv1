@@ -151,7 +151,7 @@ const submitLoginFrm = async (frm, token, headerName) => {
         body: formData
     }).then(async response => {
         if (response.ok) { // 로그인을 성공했다면
-            alert('로그인을 성공했습니다.')
+            alert(await response.text());
             location.href = '/member/myinfo'
         } else if (response.status === 401){
             alert(await response.text());
