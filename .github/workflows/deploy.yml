@@ -31,7 +31,7 @@ jobs:
       # 패키지 배포 준비
       - name: prepare deploy
         run: |
-          mkdir deploy
+          mkdir -p deploy
           cp target/*.jar deploy/application.jar
           cp scripts/deploy.sh /deploy
           ls -al deploy
